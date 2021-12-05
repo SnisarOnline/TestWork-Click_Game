@@ -1,0 +1,29 @@
+
+.content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  justify-content: space-between;
+  margin: 0 10px;
+
+  .board, .list {
+    flex: 1 1 50%;
+    margin: 10px 0;
+    border: 2px solid #e6e6e6;
+    padding: 15px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .board {
+    border-radius: 10px 0px 0px 10px;
+  }
+
+  .list {
+    border-radius: 0px 10px 10px 0px;
+  }
+}
