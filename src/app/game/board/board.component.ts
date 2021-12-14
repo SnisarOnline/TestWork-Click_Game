@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ComponentDestroyedMixin} from '@app-shared/mixins';
-import {GameService} from '../shared/api.service';
+import {GameService} from '../shared/game-api.service';
 import {GameDifficultyModel} from '../shared/models/gameMode.model';
 import {SquareModel} from '../shared/models/square.model';
 

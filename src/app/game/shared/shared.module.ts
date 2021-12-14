@@ -2,7 +2,7 @@ import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
 // Service
-import {GameService} from './api.service';
+import {GameService} from './game-api.service';
 
 
 @NgModule({

@@ -2,19 +2,19 @@
          [class.fill-parent]="optionSpinner.loadingInside"
          [ngStyle]="{'background': optionSpinner.bgColor}"
 >
-    <ng-container [ngSwitch]="optionSpinner.type">
-        <ng-template [ngSwitchCase]="SPINNER_TYPE.BASE">
-            <mat-spinner [color]="optionSpinner.themePalette" [diameter]="80"></mat-spinner>
-        </ng-template>
+  <ng-container [ngSwitch]="optionSpinner.type">
+    <ng-template [ngSwitchCase]="SPINNER_TYPE.BASE">
+      <mat-spinner [color]="optionSpinner.themePalette" [diameter]="80"></mat-spinner>
+    </ng-template>
 
-        <div *ngSwitchCase="SPINNER_TYPE.PROGRESS_LOADING">
-            <section class="spinner__message" [ngStyle]="{'fontSize': optionSpinner.fontSize}">
-                <div>Loading...</div>
-                <p>The process may take several minutes…</p>
-            </section>
+    <div *ngSwitchCase="SPINNER_TYPE.PROGRESS_LOADING">
+      <section class="spinner__message" [ngStyle]="{'fontSize': optionSpinner.fontSize}">
+        <div>Loading...</div>
+        <p>The process may take several minutes…</p>
+      </section>
 
-            <mat-progress-bar [color]="optionSpinner.themePalette" mode="determinate"
-                              [value]="optionSpinner.statusCheck?.progress"></mat-progress-bar>
-        </div>
-    </ng-container>
+      <mat-progress-bar [color]="optionSpinner.themePalette" mode="determinate"
+                        [value]="optionSpinner.statusCheck?.progress"></mat-progress-bar>
+    </div>
+  </ng-container>
 </section>
