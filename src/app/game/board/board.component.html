@@ -1,6 +1,6 @@
 <div class="component">
 
-  <form class="menu" [formGroup]="gameSettings" (ngSubmit)="onStartGame()">
+  <form class="menu" [formGroup]="gameSettings" (ngSubmit)="onStartGame($event)">
     <mat-form-field>
       <mat-label>Pick game mode</mat-label>
       <mat-select formControlName="level" (valueChange)="onChangBoard($event)">
@@ -33,7 +33,7 @@
          [class.active]="square.active"
          [class.win]="square.win"
          [class.losing]="square.losing"
-         (click)="userClickSquare(square)"
+         (click)="onClickSquare(square)"
     ></div>
   </section>
 

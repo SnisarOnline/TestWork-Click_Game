@@ -11,4 +11,13 @@ export class SquareModel {
     this.win = init.win ?? false;
   }
 
+  public onActive(timeout: number): void {
+    this.active = true;
+    setTimeout( () => {
+      if (!this.win) {
+        this.losing = true;
+      }
+    }, timeout)
+  }
+
 }

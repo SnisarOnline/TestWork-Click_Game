@@ -67,7 +67,7 @@ export class GameService implements OnDestroy {
     return this.winnersEvent.pipe(takeUntil(this.serviceDestroyed))
   }
 
-  public sentResult(post: any): any {
+  public sentResult(post: WinnerModel): any {
     return this.api.postObservable('winners', post)
       .pipe(takeUntil(this.serviceDestroyed))
       .subscribe(() => this.getWinners());
