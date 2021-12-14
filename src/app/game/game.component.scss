@@ -1,5 +1,5 @@
 
-.content {
+.gameContent {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -7,7 +7,7 @@
   justify-content: space-between;
   margin: 0 10px;
 
-  .board, .list {
+  .gameBoard, .gameList {
     flex: 1 1 50%;
     margin: 10px 0;
     border: 2px solid #e6e6e6;
@@ -19,11 +19,11 @@
     align-items: flex-start;
   }
 
-  .board {
+  .gameBoard {
     border-radius: 10px 0px 0px 10px;
   }
 
-  .list {
+  .gameList {
     border-radius: 0px 10px 10px 0px;
   }
 }

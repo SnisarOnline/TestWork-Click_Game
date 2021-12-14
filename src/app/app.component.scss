@@ -1,15 +1,15 @@
-:host{
+:host {
   height: 100%;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
   padding: 5px;
 
-  .main-header{
+  .main-header {
     margin-bottom: 10px;
   }
 
-  .main-content{
+  .main-content {
     flex: 1 1 auto;
   }
 }

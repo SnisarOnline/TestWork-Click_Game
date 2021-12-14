@@ -1,10 +1,10 @@
 <div class="component">
-  <h2 class="header">Leader board</h2>
+    <h2 class="header">Leader board</h2>
 
-  <ul class="list">
-    <li class="list-item" *ngFor="let winnerItem of winnersList$ | async">
-      <span>{{winnerItem.winner}}</span>
-      <span>{{winnerItem.date}}</span>
-    </li>
-  </ul>
+    <ul class="gameList">
+        <li class="list-item" *ngFor="let winner of winnersList$ | async">
+            <span>{{winner.winner}}</span>
+            <span>{{winner.date}}</span>
+        </li>
+    </ul>
 </div>

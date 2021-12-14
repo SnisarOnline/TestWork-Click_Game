@@ -7,6 +7,7 @@ import {GameComponent} from './game.component';
 import {BoardComponent} from './board/board.component';
 import {WinnerListComponent} from './winner-list/winner-list.component';
 import {SharedModule} from '@app-shared/shared.module';
+import {GameSharedModule} from './shared/shared.module';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import {SharedModule} from '@app-shared/shared.module';
     GameRoutingModule,
     ReactiveFormsModule,
     SharedModule,
+    GameSharedModule.forRoot(),
   ]
 })
 export class GameModule {}

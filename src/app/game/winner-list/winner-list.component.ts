@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {ApiService} from '@app-shared/api.service';
-// import {WinnerModel} from '@app-shared/models/winner.model';
 import {Observable} from 'rxjs';
+import {GameService} from '../shared/api.service';
+import {WinnerModel} from '../shared/models/winner.model';
 
 @Component({
   selector: 'game-winner-list',
@@ -9,15 +9,14 @@ import {Observable} from 'rxjs';
   styleUrls: ['./winner-list.component.scss']
 })
 export class WinnerListComponent implements OnInit {
-
-  public winnersList$: Observable<any[]> = new Observable();
+  public winnersList$: Observable<WinnerModel[]> = new Observable();
 
   constructor(
-    private apiService: ApiService
+    private gameService: GameService
   ) {}
 
   ngOnInit() {
-    // this.winnersList$ = this.apiService.getList();
+    this.winnersList$ = this.gameService.getUpdatesWinners();
   }
 
 }

@@ -36,7 +36,7 @@ export class OptionSpinner {
   public fontSize: string | undefined;
 
   constructor(init?: OptionSpinnerType) {
-    if (init){
+    if (init) {
       Object.assign(this, init);
     }
   }

@@ -1,41 +1,40 @@
 <div class="component">
 
-  <form class="menu" [formGroup]="gameSettings" (ngSubmit)="onStartGame()">
-    <mat-form-field>
-      <mat-label>Pick game mode</mat-label>
-      <mat-select formControlName="level" (valueChange)="onChangBoard($event)">
-        <mat-option *ngFor="let topping of toppingList" [value]="topping">
-          {{topping.name}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+    <form class="menu" [formGroup]="gameSettings" (ngSubmit)="onStartGame()">
+        <mat-form-field>
+            <mat-label>Pick game mode</mat-label>
+            <mat-select formControlName="level" (valueChange)="onChangBoard($event)">
+                <mat-option *ngIf="gameMode.length == 0" disabled>Empty</mat-option>
+                <mat-option *ngFor="let mode of gameMode" [value]="mode">
+                    {{mode.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
 
-    <mat-form-field class="example-full-width">
-      <input matInput placeholder="Enter you name" formControlName="name">
-      <mat-error *ngIf="gameSettings.get('name')?.hasError('required')">
-        Name is <strong>required</strong>
-      </mat-error>
-    </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="Enter you name" formControlName="name">
+            <mat-error *ngIf="gameSettings.get('name')?.hasError('required')">
+                Name is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
 
-    <button mat-raised-button color="primary"
-            [disabled]="gameSettings.invalid"> {{'Play'}}</button>
-  </form>
+        <button mat-raised-button color="primary"
+                [disabled]="gameSettings.invalid"> {{'Play'}}</button>
+    </form>
 
-<!--
-  <div class="notification" *ngIf="message">
-    <span>{{message}}</span>
-  </div>
--->
+    <!--
+      <div class="notification" *ngIf="message">
+        <span>{{message}}</span>
+      </div>
+    -->
 
-<!--
-  <section class="chipboard" #ChipboardWidth>
-    <div *ngFor="let square of chipboardSquares; let i = index" class="container-item" [attr.data-index]="i"
-         [class.active]="square.active"
-         [class.win]="square.win"
-         [class.losing]="square.losing"
-         (click)="userClickSquare(square)"
-    ></div>
-  </section>
--->
+    <section class="board">
+        <div *ngFor="let square of squaresOnboard; let i = index" class="board__item" [attr.data-index]="i"
+             [class.active]="square.active"
+             [class.win]="square.win"
+             [class.losing]="square.losing"
+             (click)="userClickSquare(square)"
+        ></div>
+    </section>
 
 </div>
