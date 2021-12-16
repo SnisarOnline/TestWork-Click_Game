@@ -20,15 +20,15 @@ export class SpinnerComponent implements OnInit, OnDestroy {
     this.subscription = SpinnerComponent.$counter.subscribe(value => {
       setTimeout(() => (this.visible = value), 0);
     });
-    if (SpinnerComponent.$counter.observers.length === 1) {
-      SpinnerComponent.$counter.observers[0].next(true);
+    if (SpinnerComponent.$counter.observed) {
+      SpinnerComponent.$counter.next(true);
     }
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
-    if (SpinnerComponent.$counter.observers[0]) {
-      SpinnerComponent.$counter.observers[0].next(false);
+    if (SpinnerComponent.$counter.observed) {
+      SpinnerComponent.$counter.complete();
     }
   }
 }

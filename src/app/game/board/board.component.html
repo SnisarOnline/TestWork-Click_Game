@@ -19,22 +19,21 @@
     </mat-form-field>
 
     <button mat-raised-button color="primary"
-            [disabled]="gameSettings.invalid"> {{'Play'}}</button>
+            [disabled]="gameSettings.invalid || gameIsStarted"> {{isFirstGame ? 'Play' : 'Play again'}}</button>
   </form>
 
-  <!--
-    <div class="notification" *ngIf="message">
+    <div class="notification" [hidden]="!message">
       <span>{{message}}</span>
     </div>
-  -->
 
-  <section class="board">
+  <section class="board" #BoardSize>
     <div *ngFor="let square of squaresOnboard; let i = index" class="board__item" [attr.data-index]="i"
          [class.active]="square.active"
          [class.win]="square.win"
          [class.losing]="square.losing"
          (click)="onClickSquare(square)"
     ></div>
+    <app-spinner *ngIf="squaresOnboard.length === 0"></app-spinner>
   </section>
 
 </div>

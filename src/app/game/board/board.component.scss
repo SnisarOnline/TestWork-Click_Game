@@ -16,9 +16,8 @@
 @mixin grid_board($columns, $lineHeight) {
   //$columns: Количество колонок которое мы хотим видеть
   $total_columns: $columns * 2;
-  /* Задаем в 2раза больше от нужного,
-             что бы была возможность последние центрировать по среди колонок */
-  $step_column_number: $total_columns/$columns; // Получим количество сечений для смещения
+  /* Задаем в 2раза больше от нужного, что бы была возможность последние центрировать по среди колонок */
+  $step_column_number: calc($total_columns / $columns); // Количество сечений для смещения
 
   display: grid;
   grid-auto-rows: $lineHeight;
@@ -104,15 +103,17 @@
 
     .board {
       width: 100%;
-      max-width: 350px;
-      box-sizing: border-box;
-      border: 2px solid #dbdbdb;
-      padding: 30px;
-      margin: 50px auto 0;
-      background: #f3f3f3;
-      box-shadow: 0 0 20px 0 #d5d5d5;
+      min-width: 200px;
       min-height: 200px;
+      box-sizing: border-box;
+      //border: 2px solid #dbdbdb;
+      //padding: 30px;
+      margin: 50px auto 0;
+      //background: #f3f3f3;
+      //box-shadow: 0 0 20px 0 #d5d5d5;
       counter-reset: box-number;
+      position: relative;
+
       /* Добавляем нумерацию для удобства
          @Info https://developer.mozilla.org/en-US/docs/Web/CSS/counter-reset
          @Info https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Lists_and_Counters/Using_CSS_counters
@@ -123,7 +124,7 @@
       @include flex_board;
 
       /* --grid - 2-4 колонки -- */
-      // @include grid_board(3, '20px');
+      //@include grid_board(4, '20px');
 
 
       &__item {

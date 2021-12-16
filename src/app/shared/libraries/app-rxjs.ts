@@ -8,3 +8,6 @@ export {map} from 'rxjs/operators';
 export {Subscription} from 'rxjs';
 export {filter} from 'rxjs/operators';
 export {takeUntil} from 'rxjs/operators';
+export {BehaviorSubject} from 'rxjs';
+export {delay} from 'rxjs';
+

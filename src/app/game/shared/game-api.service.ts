@@ -1,8 +1,7 @@
 import {Injectable, OnDestroy} from '@angular/core';
-import {BehaviorSubject, Observable, Subject, takeUntil} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {BehaviorSubject, delay, Observable, Subject, takeUntil, map} from '@app-rxjs';
 import {ApiService} from '@app-shared/api.service';
-import {GameDifficultyModel} from './models/gameMode.model';
+import {GameDifficultyModelForArr, GameDifficultyModelForObject} from './models/gameDifficultyModel.model';
 import {WinnerModel} from './models/winner.model';
 
 @Injectable({providedIn: 'root'})
@@ -22,29 +21,47 @@ export class GameService implements OnDestroy {
     this.serviceDestroyed.complete();
   }
 
-  public getSettings(): Observable<GameDifficultyModel[]> {
+  public getObjectSetting(): Observable<GameDifficultyModelForObject> {
+    /*
+    return new Observable((subscriber) => {
+      const base = `{
+        'easyMode': {'field': 5, 'delay': 2000},
+        'normalMode': {'field': 10, 'delay': 1000},
+        'hardMode': {'field': 15, 'delay': 900}
+      }`;
+      subscriber.next(JSON.parse(base));
+    })
+    */
+    return this.api.getObservable<GameDifficultyModelForObject>('game-settings')
+      .pipe(
+        takeUntil(this.serviceDestroyed),
+        delay(1000)
+      );
+  }
+
+  public getArrSettings(): Observable<GameDifficultyModelForArr[]> {
     /*
     return new Observable( (subscriber) => {
       const base = [
-        { delay: 2000, field: 3, name: 'Default', },
-        { delay: 1800, field: 5, name: 'easyMode', },
-        { delay: 1000, field: 10, name: 'normalMode', },
-        { delay: 800, field: 15, name: 'hardMode', },
-        { delay: 650, field: 20, name: 'superHardMode', }
+        { name: 'Default', field: 3, delay: 2000 },
+        { name: 'easyMode', field: 5, delay: 1800 },
+        { name: 'normalMode', field: 10, delay: 1000 },
+        { name: 'hardMode', field: 15, delay: 800 },
+        { name: 'superHardMode', field: 20, delay: 650 }
       ]
       subscriber.next(base);
     })
 */
 
-    return this.api.getObservable<any[]>('game-settings')
+    return this.getObjectSetting()
       .pipe(
         takeUntil(this.serviceDestroyed),
-        map((setting: any[]) => {
+        map((setting: GameDifficultyModelForObject) => {
           const settingList: any[] = [];
 
-          Object.keys(setting).forEach((item: any) => {
+          Object.keys(setting).forEach((item: string) => {
             settingList.push(
-              new GameDifficultyModel({
+              new GameDifficultyModelForArr({
                 name: item,
                 delay: setting[item].delay,
                 field: setting[item].field

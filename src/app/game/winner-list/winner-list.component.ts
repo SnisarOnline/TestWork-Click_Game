@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable} from '@app-rxjs';
 import {GameService} from '../shared/game-api.service';
 import {WinnerModel} from '../shared/models/winner.model';
 

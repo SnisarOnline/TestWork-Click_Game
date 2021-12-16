@@ -7,7 +7,7 @@ import {OptionSpinner, SpinnerType} from '@app-shared/components/spinner/models'
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  public title = 'Game In Dots';
+  public title = 'TestWork';
   public isDataLoading = true;
   public optionSpinner: OptionSpinner = new OptionSpinner({
     bgColor: 'rgb(0 0 0 / 50%)',

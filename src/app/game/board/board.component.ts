@@ -1,9 +1,9 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ComponentDestroyedMixin} from '@app-shared/mixins';
-import {takeUntil, interval, Subject, take} from '@app-rxjs';
+import {takeUntil, interval, take} from '@app-rxjs';
 import {GameService} from '../shared/game-api.service';
-import {GameDifficultyModel} from '../shared/models/gameMode.model';
+import {GameDifficultyModelForArr} from '../shared/models/gameDifficultyModel.model';
 import {SquareModel} from '../shared/models/square.model';
 import {WinnerModel} from '../shared/models/winner.model';
 
@@ -15,28 +15,34 @@ import {WinnerModel} from '../shared/models/winner.model';
 })
 export class BoardComponent extends ComponentDestroyedMixin() implements OnInit {
   // SettingsGame
-  public gameMode: GameDifficultyModel[] = [];
+  public gameMode: GameDifficultyModelForArr[] = [];
   public gameSettings: FormGroup = this.fb.group({
     level: [null, Validators.required],
     name: [null, Validators.required]
   });
+  public gameIsStarted: boolean = false;
+  public isFirstGame: boolean = true;
 
   // Board
   public squaresOnboard: SquareModel[] = []
-  private changeBoard: Subject<void> = new Subject<void>();
+  // @ts-ignore
+  @ViewChild('BoardSize') boardSize: ElementRef<HTMLElement>
+
+  // Message
+  public message: string = ''
 
   constructor(
     private cdr: ChangeDetectorRef,
     private fb: FormBuilder,
-    private gameService: GameService
+    private gameService: GameService,
+    private renderer: Renderer2
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.gameService.getSettings()
-      .subscribe((setting: GameDifficultyModel[]) => {
-        console.log('All game mode:', setting);
+    this.gameService.getArrSettings()
+      .subscribe((setting: GameDifficultyModelForArr[]) => {
         this.gameMode = setting;
         if (setting.length > 0) {
           this.gameSettings.patchValue({level: this.gameMode[0]})
@@ -45,12 +51,22 @@ export class BoardComponent extends ComponentDestroyedMixin() implements OnInit 
       });
   }
 
-  private initBoard(gameMode: GameDifficultyModel) {
+  private initBoard(gameMode: GameDifficultyModelForArr) {
     this.squaresOnboard = [];
-    for (let i = 0; i < gameMode.field * 3; i++) {
+    for (let i = 0; i < gameMode.field * 4; i++) {
       this.squaresOnboard.push(
         new SquareModel({id: i})
       )
+    }
+
+    if (this.squaresOnboard.length <= 20) {
+      this.renderer.setStyle(this.boardSize.nativeElement, 'max-width', '300px')
+    }
+    else if (this.squaresOnboard.length <= 40) {
+      this.renderer.setStyle(this.boardSize.nativeElement, 'max-width', '480px')
+    }
+    else if (this.squaresOnboard.length <= 60) {
+      this.renderer.setStyle(this.boardSize.nativeElement, 'max-width', '600px')
     }
   }
 
@@ -71,6 +87,28 @@ export class BoardComponent extends ComponentDestroyedMixin() implements OnInit 
     return result;
   }
 
+  private blockUnlockForm() {
+    this.gameIsStarted = !this.gameIsStarted
+    if (this.gameIsStarted) {
+      this.gameSettings.controls['level'].disable();
+      this.gameSettings.controls['name'].disable();
+    }
+    else {
+      this.gameSettings.controls['level'].enable();
+      this.gameSettings.controls['name'].enable();
+    }
+  }
+
+  private resetResultGame() {
+    this.isFirstGame = false
+    this.initBoard(this.gameSettings.value.level);
+  }
+
+  private showMessage(text: string, timeShow = 5000) {
+    this.message = text
+    setTimeout( () => this.message = '', timeShow)
+  }
+
   private checkResultGame() {
     const user = this.gameSettings.value.name;
 
@@ -83,16 +121,18 @@ export class BoardComponent extends ComponentDestroyedMixin() implements OnInit 
     })
 
     if (res.win > res.lost) {
-      alert('Win')
+      this.showMessage(`player ${user} won`);
       this.gameService.sentResult(new WinnerModel({winner: user}))
-    } else {
-      alert('Lost')
     }
+    else {
+      this.showMessage('computer won');
+    }
+
+    this.resetResultGame();
+    this.blockUnlockForm();
   }
 
-  public onChangBoard(quantitySquares: any) {
-    this.changeBoard.next()
-    this.changeBoard.complete();
+  public onChangBoard(quantitySquares: GameDifficultyModelForArr) {
     this.initBoard(quantitySquares);
   }
 
@@ -105,13 +145,14 @@ export class BoardComponent extends ComponentDestroyedMixin() implements OnInit 
       return
     }
 
-    const config: GameDifficultyModel = this.gameSettings.value.level;
+    this.blockUnlockForm();
+
+    const config: GameDifficultyModelForArr = this.gameSettings.value.level;
     const randomArrNumbers = this.randomSquares(0, this.squaresOnboard.length);
 
-    config.delay = 800; // todo: test
+    config.delay = 300; // todo: test
 
     interval(config.delay).pipe(
-      takeUntil(this.changeBoard),
       takeUntil(this.componentDestroyed),
       take(this.squaresOnboard.length)
     ).subscribe(x => {
@@ -121,7 +162,7 @@ export class BoardComponent extends ComponentDestroyedMixin() implements OnInit 
       someSquare.onActive(config.delay);
 
       if (x === (this.squaresOnboard.length - 1)) {
-        setTimeout(() => this.checkResultGame() , config.delay )
+        setTimeout(() => this.checkResultGame(), config.delay)
       }
     });
   }

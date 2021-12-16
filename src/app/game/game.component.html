@@ -1,3 +1,11 @@
+<mat-toolbar class="main-header" color="primary">
+  <img width="40" alt="Angular Logo"
+       src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="
+  />
+  <h3><a [href]="apiInfoUrl">{{title}}</a></h3>
+</mat-toolbar>
+
+
 <div class="gameContent" role="main">
 
   <div class="gameBoard">
@@ -10,26 +18,8 @@
 
 </div>
 
-### Для успешного прохождения нашего теста вы должны соответствовать следующим критериям:
-
-<br> - игра ДОЛЖНА работать без ошибок
-<br> - предустановки сложности игры, которые вы можете получить с помощью этой конечной точки this-domain / game-settings. Это должен быть запрос к серверу, а НЕ просто копирование и вставка данных.
-> Эти данные представляют собой массив объектов с двумя полями:
+> данные представляют собой массив объектов с двумя полями:
 <br> - field - содержат размер игрового поля. Должен быть квадратной формы
 <br> - delay - время в миллисекундах
 
-<br> - данные для таблицы лидеров вы можете получить из этого домена / победителей. Также это должна быть просьба.
-
-<br> - когда кто-то выигрывает, вы должны отправить запрос на сервер с JSON, который содержит два поля победителя и дату
-
-
-<br> - пользователь устанавливает сложность игры и название
-<br> - Нажмите кнопку PLAY
-<br> - через заданный промежуток времени (в поле задержки) случайный квадрат на поле подсвечивается синим цветом
-<br> - если пользователю удалось за это время щелкнуть по квадрату - он становится зеленым, игрок получает очко, а поле меняет цвет на зеленый
-<br> - если нет, поле становится красным и точка переходит в компьютер
 <br> - когда игрок или компьютер закрашивает> 50% всех возможных квадратов в свой цвет - он становится победителем
-<br> - между кнопками управления и игровым полем появляется надпись, которую выиграл игрок (имя, которое он ввел) / компьютер
-<br> - кнопка PLAY изменяет заголовок на PLAY AGAIN
-<br> - результат игры необходимо отправить на сервер на этой конечной точке this-domain / winners в формате JSON с двумя полями, победителем и датой обеих строк.
-<br> - результаты в таблице должны обновляться автоматически
