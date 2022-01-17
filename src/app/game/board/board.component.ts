@@ -150,7 +150,7 @@ export class BoardComponent extends ComponentDestroyedMixin() implements OnInit 
     const config: GameDifficultyModelForArr = this.gameSettings.value.level;
     const randomArrNumbers = this.randomSquares(0, this.squaresOnboard.length);
 
-    config.delay = 300; // todo: test
+    // config.delay = 300; // todo: test
 
     interval(config.delay).pipe(
       takeUntil(this.componentDestroyed),
